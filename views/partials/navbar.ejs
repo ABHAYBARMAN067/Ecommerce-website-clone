@@ -1,0 +1,269 @@
+<nav class="main-navbar">
+  <div class="navbar-container">
+
+    <div class="logo">
+      <a href="/">BazaarNow</a>
+    </div>
+
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false">&#9776;</button>
+
+    <!-- <div class="search-wrapper">
+      <form class="search-form" role="search" action="/search" method="GET">
+        <input type="search" name="query" placeholder="Search..." class="search-input" aria-label="Search">
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+    </div> -->
+
+    <ul id="navLinks" class="nav-links hidden">
+      <li><a href="/">Home</a></li>
+      <li><a href="/cart">Cart</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+
+      <% if (session && session.userId) { %>
+        <% if (session.role === 'seller') { %>
+          <li><a href="/seller/dashboard">Admin</a></li>
+        <% } else if (session.role === 'customer') { %>
+          <li><span>Welcome Customer</span></li>
+        <% } %>
+        <li><a href="/auth/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/auth/login">Login</a></li>
+        <li><a href="/auth/register">Sign Up</a></li>
+      <% } %>
+    </ul>
+
+  </div>
+</nav>
+
+---
+
+<style>
+/* 🔵 Main Navbar */
+
+.main-navbar {
+  background-color: #0077dd;
+  padding: 1.2rem 1rem; /* 🔼 Yeh line badhao */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* 🔗 Logo */
+.logo a {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Smooth transition for logo hover */
+}
+
+.logo a:hover {
+  color: #cceeff; /* Lighter blue on hover */
+}
+
+/* 🍔 Hamburger Icon */
+.hamburger {
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 0.75rem;
+  right: 2rem;
+  background: none; /* Remove default button background */
+  border: none;      /* Remove default button border */
+  padding: 0;        /* Remove default button padding */
+  line-height: 1;    /* Adjust line height for better icon centering */
+  transition: transform 0.3s ease; /* Smooth rotation for hamburger */
+top: 0.1rem;
+
+}
+
+/* Optional: Hamburger to X animation */
+.hamburger.show-x {
+  transform: rotate(90deg); /* Rotate to suggest an 'X' or closed state */
+}
+
+
+/* 🔍 Search Bar */
+.search-wrapper {
+  order: 3;
+  width: 100%;
+  margin-top: 0.8rem;
+  display: block;
+  padding: 0 0.5rem; /* Added horizontal padding for search bar */
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.6rem; /* Slightly more padding for better feel */
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.search-btn {
+  background-color: #0044cc;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for button hover */
+}
+
+.search-btn:hover {
+  background-color: #0033aa;
+}
+
+/* 🌐 Nav Links */
+.nav-links {
+  order: 4;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+  /* Smooth slide-down/up effect for mobile menu */
+  max-height: 0; /* Start hidden */
+  overflow: hidden; /* Hide overflow content */
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out; /* Add transition */
+  opacity: 0; /* Start invisible */
+}
+
+.nav-links.show {
+  display: flex !important; /* Override display:none */
+  max-height: 300px; /* Adjust based on max content height, ensures smooth transition */
+  opacity: 1; /* Fade in */
+}
+
+
+.nav-links a,
+.nav-links span {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem; /* Increased padding for better clickability */
+  border-radius: 5px; /* Slightly rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+.nav-links a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white background on hover */
+  color: white;
+}
+
+/* Optional: Active link styling */
+.nav-links a.active {
+  background-color: rgba(255, 255, 255, 0.3);
+  font-weight: bold;
+}
+
+.nav-links li {
+  list-style: none;
+  width: calc(100% - 1rem); /* Account for padding */
+  text-align: center;
+}
+
+/* 🖥️ Desktop View */
+@media (min-width: 768px) {
+  .navbar-container {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .search-wrapper {
+    order: 0;
+    width: auto;
+    margin: 0 1rem;
+    padding: 0; /* Remove padding on desktop */
+  }
+
+  .nav-links {
+    order: 0;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+    width: auto;
+    margin-top: 0;
+    padding-bottom: 0;
+    max-height: none; /* Remove max-height constraint for desktop */
+    opacity: 1; /* Always visible on desktop */
+  }
+
+  .nav-links li {
+    width: auto;
+    text-align: left;
+  }
+
+  .nav-links a,
+  .nav-links span {
+    padding: 0; /* Remove padding from desktop links for cleaner look */
+    background-color: transparent; /* Ensure no background on hover on desktop */
+  }
+
+  .nav-links a:hover {
+    color: #cceeff; /* Lighter blue on hover for desktop */
+    background-color: transparent; /* No background on desktop hover */
+  }
+
+  .nav-links a.active {
+    background-color: transparent; /* No background for active on desktop */
+    color: #cceeff; /* Highlight active link with lighter color */
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+</style>
+
+---
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    const hamburger = document.querySelector(".hamburger");
+
+    nav.classList.toggle("show");
+    hamburger.classList.toggle("show-x"); // Toggle class for hamburger animation
+
+    // Update ARIA attributes
+    const isExpanded = nav.classList.contains("show");
+    hamburger.setAttribute("aria-expanded", isExpanded);
+  }
+</script>

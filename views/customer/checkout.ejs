@@ -1,0 +1,11 @@
+<%- include('../partials/navbar') %>
+
+<div class="checkout-container">
+  <h2>Checkout</h2>
+  <form action="/orders" method="POST">
+    <input type="text" name="address" placeholder="Shipping Address" required>
+    <button type="submit">Place Order</button>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

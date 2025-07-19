@@ -1,0 +1,13 @@
+
+<h2>Orders Received</h2>
+
+<% orders.forEach(order => { %>
+  <div>
+    <p><strong>Customer:</strong> <%= order.customerName %></p>
+    <p><strong>Product:</strong> <%= order.productName %></p>
+    <p><strong>Status:</strong> <%= order.status %></p>
+  </div>
+  <hr>
+<% }) %>
+
+<%- include('../partials/footer') %>

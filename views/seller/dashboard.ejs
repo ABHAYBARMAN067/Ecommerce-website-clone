@@ -1,0 +1,40 @@
+<div class="seller-dashboard">
+  <!-- Sidebar -->
+  <aside class="sidebar-nav">
+    <h2>Seller Panel</h2>
+    <ul>
+      <li><a href="/seller/products/new">Add Product</a></li>
+      <li><a href="/seller/products">Manage Products</a></li>
+      <li><a href="/seller/orders">View Orders</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="dashboard-content">
+    <h1>Your Products</h1>
+
+    <% if (products?.length) { %>
+      <ul>
+        <% products.forEach(({ _id, name, price, image, description }) => { %>
+          <li style="margin-bottom: 1rem;">
+            <strong><%= name %></strong> - ₹<%= price %><br>
+
+            <% if (image) { %>
+              <img src="<%= image %>" alt="<%= name %>" width="150" /><br>
+            <% } %>
+
+            <small><%= description %></small><br>
+
+            <a href="/seller/products/<%= _id %>/edit" class="btn btn-sm btn-primary">Edit</a>
+            <form action="/seller/products/<%= _id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No products added yet.</p>
+    <% } %>
+  </main>
+</div>
+

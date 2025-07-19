@@ -1,0 +1,32 @@
+<% if (products.length > 0) { %>
+  <div class="product-grid">
+    <% products.forEach(product => { %>
+      <div class="product-card">
+        <% if (product.image) { %>
+          <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+        <% } %>
+        <div class="product-info">
+          <h3 class="product-name"><%= product.name %></h3>
+          <p class="product-price">₹<%= product.price %></p>
+          <p class="product-description"><%= product.description %></p>
+          <% if (session && session.userId) { %>
+            <form action="/cart/add" method="POST" class="cart-form">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <input type="hidden" name="name" value="<%= product.name %>">
+              <input type="hidden" name="price" value="<%= product.price %>">
+              <input type="hidden" name="image" value="<%= product.image %>">
+              <input type="number" name="quantity" value="1" min="1" class="quantity-input" required>
+              <button type="submit" class="add-btn">Add to Cart</button>
+            </form>
+          <% } else { %>
+            <div class="login-alert">
+              <a href="/auth/login" class="login-required-btn">BUY</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="no-products">No products available.</p>
+<% } %>

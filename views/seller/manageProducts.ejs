@@ -1,0 +1,11 @@
+<h2 style="text-align:center; margin-bottom:32px;">Manage Your Products</h2>
+<div class="product-manage-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;">
+<% products.forEach(product => { %>
+  <div class="manage-card" style="background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.07); padding:24px; display:flex; flex-direction:column; align-items:center;">
+    <h3 style="margin-bottom:8px; color:#0056b3;"><%= product.name %></h3>
+    <p style="margin-bottom:8px; color:#333;"> <%= product.description %> </p>
+    <p style="font-weight:bold; color:#222; margin-bottom:16px;">₹<%= product.price %></p>
+    <a href="/seller/edit/<%= product._id %>" class="btn btn-primary" style="width:100%;">Edit</a>
+  </div>
+<% }) %>
+</div>

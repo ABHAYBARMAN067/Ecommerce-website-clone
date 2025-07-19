@@ -1,0 +1,14 @@
+<%- include('../partials/navbar') %>
+
+<h2>Your Orders</h2>
+<% if (orders.length === 0) { %>
+  <p>No orders yet.</p>
+<% } else { %>
+  <ul>
+    <% orders.forEach(order => { %>
+      <li>Order #<%= order._id %> - ₹<%= order.total %> - <%= order.status %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<%- include('../partials/footer') %>

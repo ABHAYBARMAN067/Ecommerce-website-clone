@@ -1,0 +1,56 @@
+<div class="cart-container responsive-container" style="margin-bottom: 120px; max-width: 600px;">
+  <h2>Your Shopping Cart</h2>
+  <% if (success) { %>
+    <p class="success-message"><%= success %></p>
+  <% } %>
+  <% if (cart && cart.length > 0) { %>
+    <ul class="cart-list">
+      <% cart.forEach((item, idx) => { %>
+        <li class="cart-item">
+          <div class="cart-item-details">
+            <strong><%= item.name %></strong> – ₹<%= item.price %> × <%= item.quantity %><br>
+            <% if (item.image) { %>
+              <img src="<%= item.image %>" alt="Product Image" width="100" height="100" class="cart-image" /><br>
+            <% } else { %>
+              <small>No image available</small><br>
+            <% } %>
+          </div>
+          <form action="/cart/remove" method="POST" style="display:inline;">
+            <input type="hidden" name="index" value="<%= idx %>">
+            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+    <h4>Total: ₹<%= total %></h4>
+    <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+  <% } else { %>
+    <p class="empty-cart-message">Your cart is empty.</p>
+  <% } %>
+</div>
+
+<!-- Modal for Product Added Confirmation -->
+<div id="productModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+  <div class="modal-content" style="background:#fff; padding:24px 32px; border-radius:10px; max-width:350px; margin:auto; text-align:center;">
+    <span id="closeModal" style="float:right; cursor:pointer; font-size:1.5rem;">&times;</span>
+    <h3>Product Added!</h3>
+    <div id="modalProductDetails"></div>
+  </div>
+</div>
+
+<script>
+// Modal JS (to be triggered after add-to-cart, you can trigger this from your add-to-cart logic)
+function showProductModal(product) {
+  document.getElementById('modalProductDetails').innerHTML = `
+    <strong>${product.name}</strong><br>
+    ₹${product.price} × ${product.quantity}<br>
+    ${product.image ? `<img src="${product.image}" alt="Product Image" width="80" style="margin:10px 0;"/>` : ''}
+    <p>${product.description || ''}</p>
+  `;
+  document.getElementById('productModal').style.display = 'flex';
+}
+document.getElementById('closeModal').onclick = function() {
+  document.getElementById('productModal').style.display = 'none';
+};
+</script>
+

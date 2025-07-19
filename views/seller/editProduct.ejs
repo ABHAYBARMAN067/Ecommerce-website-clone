@@ -1,0 +1,67 @@
+<%- include('../partials/navbar') %>
+
+<div class="edit-container mt-5">
+  <h2>Edit Product</h2>
+
+  <form action="/seller/products/<%= product._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <!-- Product Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Product Name</label>
+      <input type="text" class="form-control" id="name" name="name" value="<%= product.name %>" required>
+    </div>
+
+    <!-- Product Price -->
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" required>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" name="description" rows="3" required><%= product.description %></textarea>
+    </div>
+
+    <!-- Existing Image Preview -->
+    <% if (product.image) { %>
+      <div class="mb-3">
+        <label class="form-label">Current Image</label><br>
+        <img src="<%= product.image %>" alt="Product Image" width="150" class="img-thumbnail">
+      </div>
+    <% } %>
+
+    <!-- Upload New Image -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Change Image (optional)</label>
+      <input type="file" class="form-control" id="image" name="image" accept="image/*">
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-primary">Update Product</button>
+    <a href="/seller/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>
+<style>
+
+  :root {
+    --primary-blue: #0056b3;
+    --primary-blue-dark: #004099;
+    --text-dark: #2c3e50;
+    --gray-light: #f9f9f9;
+    --white: #ffffff;
+    --shadow: rgba(0, 86, 179, 0.15);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--gray-light);
+  }
+
+ 
+</style>
+
+

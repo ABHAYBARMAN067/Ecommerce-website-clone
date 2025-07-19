@@ -1,0 +1,19 @@
+
+<div class="login-container">
+  <h2>Login</h2>
+  <% if (success) { %>
+    <p class="success-message"><%= success %></p>
+  <% } %>
+  <% if (error) { %>
+    <p class="error-message"><%= error %></p>
+  <% } %>
+  <form action="/auth/login" method="POST">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+  <div style="text-align:center; margin-top: 20px;">
+    <a href="/auth/register" class="sign-in-btn" style="display:inline-block; padding:10px 20px; background:#007bff; color:#fff; border-radius:5px; text-decoration:none; font-weight:bold;">Sign In</a>
+    <p style="margin-top:8px; color:#555;">Don't have an account? Click Sign In to register.</p>
+  </div>
+</div>
