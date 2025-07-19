@@ -269,12 +269,14 @@
   }
 
   /* -------------------- Responsive Product Grid -------------------- */
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
-    gap: clamp(1rem, 3vw, 1.5rem);
-    padding: clamp(1rem, 3vw, 2rem);
-  }
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  margin-top: 80px; 
+}
+
 
   .product-card {
     background: var(--white);
